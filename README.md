@@ -2,6 +2,7 @@
 
 API REST profissional desenvolvida em **Laravel 12** para gerenciamento completo do fluxo operacional de uma assistência técnica.
 
+Abner Cosmo - 2320046
 Ana Luiza Martins Aires - 2310847
 Davi Montandon de Siqueira - 2311965
 Isabella Guerra de Moraes Barbosa - 2320494
