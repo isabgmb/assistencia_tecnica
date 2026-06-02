@@ -1,0 +1,482 @@
+{
+  "info": {
+    "name": "Assistência Técnica - API REST",
+    "description": "Sistema de Gestão de OS\n\nAutenticação: Bearer Token via POST /api/login",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api"
+    },
+    {
+      "key": "token",
+      "value": "SEU_TOKEN_AQUI"
+    }
+  ],
+  "item": [
+    {
+      "name": "🔐 Autenticação",
+      "item": [
+        {
+          "name": "POST Login",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/login",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"admin@assistencia.com\", \"password\": \"password\"}"
+            }
+          }
+        },
+        {
+          "name": "POST Logout",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/logout",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "GET /me",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/me",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "👤 Clientes",
+      "item": [
+        {
+          "name": "GET Listar",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/clientes?busca=&ativo=1",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "POST Criar",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/clientes",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"nome\":\"João Silva\",\"cpf\":\"999.888.777-66\",\"telefone\":\"(11) 99999-0000\",\"email\":\"joao@test.com\",\"cep\":\"01310-100\",\"numero\":\"100\"}"
+            }
+          }
+        },
+        {
+          "name": "GET Por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/clientes/1",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "PUT Atualizar",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/clientes/1",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"telefone\":\"(11) 91111-2222\"}"
+            }
+          }
+        },
+        {
+          "name": "GET Buscar CEP (ViaCEP)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/cep/01310-100",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔧 Ordens de Serviço",
+      "item": [
+        {
+          "name": "GET Listar",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/ordens?status=aberta&prioridade=alta",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "POST Abrir OS",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/ordens",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"cliente_id\":1,\"tecnico_id\":2,\"equipamento\":\"Notebook Dell\",\"descricao_problema\":\"Não liga\",\"prioridade\":\"alta\",\"data_previsao\":\"2025-12-31T18:00:00\"}"
+            }
+          }
+        },
+        {
+          "name": "GET Por ID (histórico+peças)",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/ordens/1",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "PUT Atualizar Status",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/ordens/1",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"status\":\"em_andamento\",\"diagnostico\":\"Fonte defeituosa\",\"observacao\":\"Iniciando reparo\"}"
+            }
+          }
+        },
+        {
+          "name": "PUT Concluir OS",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/ordens/1",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"status\":\"concluida\",\"solucao\":\"Fonte trocada\",\"valor_servico\":280.00}"
+            }
+          }
+        },
+        {
+          "name": "PUT Cancelar OS",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/ordens/1",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"status\":\"cancelada\",\"motivo_cancelamento\":\"Cliente desistiu do reparo\"}"
+            }
+          }
+        },
+        {
+          "name": "POST Vincular Peça à OS",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/ordens/1/pecas",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"peca_id\":1,\"quantidade\":1}"
+            }
+          }
+        },
+        {
+          "name": "GET Relatório de OS",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/relatorios/ordens",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "📦 Peças e Estoque",
+      "item": [
+        {
+          "name": "GET Listar",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/pecas?busca=HD",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "POST Cadastrar",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/pecas",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"codigo\":\"SSD-240\",\"nome\":\"SSD 240GB\",\"estoque\":5,\"estoque_minimo\":1,\"preco_custo\":120,\"preco_venda\":220}"
+            }
+          }
+        },
+        {
+          "name": "GET Por ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/pecas/1",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "POST Entrada de Estoque",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/pecas/1/estoque",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"tipo\":\"entrada\",\"quantidade\":10,\"observacao\":\"Compra fornecedor\"}"
+            }
+          }
+        },
+        {
+          "name": "POST Saída de Estoque",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/pecas/1/estoque",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"tipo\":\"saida\",\"quantidade\":2,\"observacao\":\"Retirada manual\"}"
+            }
+          }
+        },
+        {
+          "name": "GET Mais Utilizadas",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/relatorios/pecas-mais-utilizadas",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "👥 Usuários (admin)",
+      "item": [
+        {
+          "name": "GET Listar",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/usuarios?perfil=tecnico",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "POST Criar",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/usuarios",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Novo Técnico\",\"email\":\"novo@assistencia.com\",\"password\":\"senha1234\",\"password_confirmation\":\"senha1234\",\"perfil\":\"tecnico\"}"
+            }
+          }
+        },
+        {
+          "name": "PUT Atualizar",
+          "request": {
+            "method": "PUT",
+            "url": "{{base_url}}/usuarios/1",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"ativo\":false}"
+            }
+          }
+        },
+        {
+          "name": "GET Técnicos Disponíveis",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/tecnicos-disponiveis",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
